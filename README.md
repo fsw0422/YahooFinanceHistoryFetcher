@@ -10,6 +10,7 @@
     val endDate = DateTime.now.clicks
     val interval = "1d"
     
-    val stockHistory: IO[Seq[StockDf]] = fetcher.getStockHistory(ticker, startDate, endDate, interval)
+    val stockFetcher = StockFetcher()
+    val stockHistory: IO[Seq[StockDf]] = stockFetcher.getStockHistory(ticker, startDate, endDate, interval)
     
     // ... compose function and invoke run
