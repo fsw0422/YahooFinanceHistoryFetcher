@@ -1,34 +1,31 @@
 import akka.actor.ActorSystem
 import akka.stream.{ActorMaterializer, ActorMaterializerSettings}
+import org.apache.log4j.varia.NullAppender
 import org.joda.time.DateTime
-import org.scalatest.prop.PropertyChecks
-import org.scalatest.{Matchers, PropSpec}
+import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.ws.ahc.StandaloneAhcWSClient
-import scala.concurrent.duration._
 
-import scala.concurrent.Await
-
-class StockSpec extends PropSpec with PropertyChecks with Matchers {
+class StockFetcherSpec extends FlatSpec with Matchers {
   implicit val actorSystem = ActorSystem("Test")
   implicit val executionContext = actorSystem.dispatcher
-  implicit val actorMaterializerSettings = ActorMaterializerSettings(
-    actorSystem
-  )
-  implicit val actorMaterializer =
-    ActorMaterializer(actorMaterializerSettings)(actorSystem)
+  implicit val actorMaterializerSettings = ActorMaterializerSettings(actorSystem)
+  implicit val actorMaterializer = ActorMaterializer(actorMaterializerSettings)(actorSystem)
   implicit val standaloneAhcWSClient = StandaloneAhcWSClient()
 
-  property("getStockHistory") {
-    val stockDao = Stock()
+  behavior of "StockFetcher"
+
+  it should "return historical records from Yahoo Finance when getStockHistory is invoked" in {
+    val stockFetcher = StockFetcher()
 
     val ticker = "FB"
     val startDate = 0L
     val endDate = DateTime.now.getMillis
     val interval = "1d"
 
-    stockDao
+    val stockDaos = stockFetcher
       .getStockHistory(ticker, startDate, endDate, interval)
       .unsafeRunSync()
-      .map(stockDfs => stockDfs.size should be > 0)
+
+    stockDaos.size should be > 0
   }
 }

@@ -36,21 +36,17 @@ scalaVersion := "2.12.3"
 
 crossScalaVersions := Seq("2.11.11")
 
-val catsVersion = "1.0.0-RC1"
-val akkaHttpVersion = "10.0.10"
-val monocleVersion = "1.4.0"
+lazy val slf4jVersion = "1.7.26"
 
 libraryDependencies ++= Seq(
-  "org.typelevel" %% "cats-effect" % "0.5",
-  "org.typelevel" %% "cats-effect-laws" % "0.5" % Test,
-  "org.typelevel" %% "cats-testkit" % catsVersion % Test,
-  "com.typesafe.play" %% "play-ahc-ws-standalone" % "2.0.0-M4",
-  "org.scalatest" %% "scalatest" % "3.0.1" % Test
+  "org.typelevel" %% "cats-effect" % "1.3.1",
+  "com.typesafe.play" %% "play-ahc-ws-standalone" % "2.0.6",
+  "org.slf4j" % "slf4j-api" % slf4jVersion % Test,
+  "org.slf4j" % "slf4j-log4j12" % slf4jVersion % Test,
+  "org.scalatest" %% "scalatest" % "3.1.0-RC1" % Test,
+  "org.scalacheck" %% "scalacheck" % "1.14.0" % Test
 )
 
-scalacOptions += "-Ypartial-unification"
-scalacOptions in Test ++= Seq("-Yrangepos")
 publishArtifact in Test := false
-enablePlugins(JmhPlugin)
 
 lazy val YahooFinanceHistoryFetcher = project in file(".")
