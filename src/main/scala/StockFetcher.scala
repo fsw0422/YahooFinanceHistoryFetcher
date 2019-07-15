@@ -6,7 +6,8 @@ import scala.concurrent.ExecutionContext
 
 case class StockFetcher(
   implicit executionContext: ExecutionContext,
-  standaloneAhcWSClient: StandaloneAhcWSClient) {
+  standaloneAhcWSClient: StandaloneAhcWSClient
+) {
 
   def getStockHistory(
     ticker: String,
