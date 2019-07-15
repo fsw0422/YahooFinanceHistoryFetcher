@@ -1,16 +1,8 @@
 import akka.actor.ActorSystem
-import akka.stream.{ActorMaterializer, ActorMaterializerSettings}
-import org.apache.log4j.varia.NullAppender
-import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
-import play.api.libs.ws.ahc.StandaloneAhcWSClient
 
 class StockFetcherSpec extends FlatSpec with Matchers {
   implicit val actorSystem = ActorSystem("Test")
-  implicit val executionContext = actorSystem.dispatcher
-  implicit val actorMaterializerSettings = ActorMaterializerSettings(actorSystem)
-  implicit val actorMaterializer = ActorMaterializer(actorMaterializerSettings)(actorSystem)
-  implicit val standaloneAhcWSClient = StandaloneAhcWSClient()
 
   behavior of "StockFetcher"
 
@@ -19,7 +11,7 @@ class StockFetcherSpec extends FlatSpec with Matchers {
 
     val ticker = "FB"
     val startDate = 0L
-    val endDate = DateTime.now.getMillis
+    val endDate = 1563226210
     val interval = "1d"
 
     val stockDaos = stockFetcher
