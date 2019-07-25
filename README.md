@@ -1,7 +1,7 @@
 # Getting
 
     // Scala 2.11, 2.12 is supported
-    "com.github.fsw0422" %% "yahoofinancehistoryfetcher" % "0.1.1"
+    "com.github.fsw0422" %% "yahoofinancehistoryfetcher" % "0.2.0"
 
 # Usage
 
